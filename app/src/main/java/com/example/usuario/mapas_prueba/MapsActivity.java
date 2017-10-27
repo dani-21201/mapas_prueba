@@ -3,12 +3,15 @@ package com.example.usuario.mapas_prueba;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.usuario.mapas_prueba.datos.DatosApi;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -28,6 +31,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private Retrofit retrofit;
     public final static String  TAG="DATOS COLOMBIA";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    public static BitmapDescriptor defaultMarker ;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -71,10 +76,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Migracion m =(Migracion)miLista.get(i);
 
                             LatLng sydney = new LatLng(m.getLatitud(),m.getLongitud());
-                            mMap.addMarker(new MarkerOptions().position(sydney).title("Estaciones Red Nacional de Acelerógrafos"));
+                            mMap.addMarker(new MarkerOptions().position(sydney).title(m.getNombreEstacion()).icon(BitmapDescriptorFactory.fromResource(R.drawable.aa)));
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,1));
                             mMap.getUiSettings().setZoomControlsEnabled(true);
-
+                            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                            mMap.getUiSettings().setMapToolbarEnabled(true);
+                           mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
 
 
